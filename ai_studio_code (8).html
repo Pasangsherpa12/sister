@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2083 | For My Gorgeous Sister</title>
+    <!-- 3D Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --accent: #ff758c;
+            --gold: #d4af37;
+            --bg: #fff5f6;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            background: var(--bg);
+            color: #4a4a4a;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* 3D Fixed Background */
+        #canvas-container {
+            position: fixed; top: 0; left: 0; z-index: -1;
+            width: 100%; height: 100%;
+        }
+
+        /* Entry Gate (Locks music to user click) */
+        #gate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: 1s ease-in-out;
+        }
+
+        .pulse-heart {
+            font-size: 5rem; cursor: pointer;
+            animation: pulse 1.5s infinite;
+            filter: drop-shadow(0 0 15px var(--accent));
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* 5 Scrollable Sections */
+        section {
+            height: 100vh; /* Each section takes exactly 1 full screen */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 40px; 
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        /* Photo Morph Frame */
+        .photo-frame {
+            width: 220px; height: 220px;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 70%;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 6px solid white;
+            box-shadow: 0 15px 30px rgba(255, 117, 140, 0.3);
+            animation: morph 8s ease-in-out infinite;
+        }
+
+        @keyframes morph {
+            0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 70%; }
+            50% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
+            100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 70%; }
+        }
+
+        /* Typography */
+        h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin: 10px 0; color: var(--accent); }
+        .tag { letter-spacing: 4px; font-size: 0.8rem; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+        p { font-size: 1.1rem; line-height: 1.5; color: #666; }
+
+        /* Surprise Bouquet Overlay */
+        #bouquet-box {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: none; justify-content: center; align-items: center;
+            z-index: 20000;
+        }
+
+        .btn-surprise {
+            background: var(--accent); color: white; border: none;
+            padding: 15px 40px; border-radius: 50px; font-size: 1rem;
+            cursor: pointer; margin-top: 20px; box-shadow: 0 10px 20px rgba(255,117,140,0.4);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Scroll Indicator */
+        .scroll-down {
+            position: absolute; bottom: 30px; font-size: 0.8rem;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--accent);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GATE (Click to start Music & Scroll) -->
+    <div id="gate">
+        <div class="pulse-heart" onclick="unlock()">💖</div>
+        <p style="margin-top:20px; font-weight:300; letter-spacing: 1px;">Tap to unlock</p>
+    </div>
+
+    <!-- Music Player -->
+    <audio id="bgm" loop>
+        <source src="C:\Users\Asus\OneDrive\Pictures\Desktop\SURPRISE\Khat.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="canvas-container"></div>
+
+    <!-- SCROLL 1: GORGEOUS -->
+    <section>
+        <div class="glass">
+            <p class="tag">Year 2083</p>
+            <h1>Gorgeous</h1>
+            <p>To my next beautiful sister.</p>
+        </div>
+        <div class="scroll-down">↓ Scroll</div>
+    </section>
+
+    <!-- SCROLL 2: THE LEADER -->
+    <section>
+        <div class="photo-frame">
+            <!-- Replace with her actual photo -->
+            <img src="https://via.placeholder.com/300/ff758c/ffffff?text=Sister" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="glass">
+            <p class="tag">Class 12</p>
+            <h1>College Head</h1>
+            <p>Kind, cute, and a natural leader.</p>
+        </div>
+        <div class="scroll-down">↓ Scroll</div>
+    </section>
+
+    <!-- SCROLL 3: THE EXAM -->
+    <section>
+        <div class="glass">
+            <p class="tag">The Challenge</p>
+            <h1>Best of Luck</h1>
+            <p>I know you will crush your exams and make us proud.</p>
+        </div>
+        <div class="scroll-down">↓ Scroll</div>
+    </section>
+
+    <!-- SCROLL 4: THE FUTURE -->
+    <section>
+        <div class="glass">
+            <p class="tag">Destiny</p>
+            <h1>Future Success</h1>
+            <p>May 2083 be the beginning of your grand legacy.</p>
+        </div>
+        <div class="scroll-down">↓ Scroll</div>
+    </section>
+
+    <!-- SCROLL 5: THE SURPRISE -->
+    <section>
+        <div class="glass">
+            <p class="tag">Final Page</p>
+            <h1>For You</h1>
+            <p>A little something from your brother from another mother.</p>
+            <button class="btn-surprise" onclick="showBouquet()">Open Bouquet 💐</button>
+        </div>
+    </section>
+
+    <!-- Bouquet Surprise Modal -->
+    <div id="bouquet-box" onclick="this.style.display='none'">
+        <div style="text-align:center;">
+            <div style="font-size: 8rem; animation: pulse 2s infinite;">💐</div>
+            <h1 style="font-size: 2.5rem;">To the Best!</h1>
+            <p>The garden of 2083 belongs to you.</p>
+            <p style="font-size: 0.8rem; color: #aaa;">(Click anywhere to close)</p>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgm');
+        
+        function unlock() {
+            document.getElementById('gate').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('gate').style.display = 'none';
+            }, 1000);
+            audio.play();
+            init3D();
+        }
+
+        function showBouquet() {
+            document.getElementById('bouquet-box').style.display = 'flex';
+        }
+
+        // --- 3D Background (Three.js) ---
+        function init3D() {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+            // Floating 3D Hearts & Crystals
+            const heartShape = new THREE.Shape();
+            heartShape.moveTo(0, 0);
+            heartShape.bezierCurveTo(0, -3, -5, -3, -5, 0);
+            heartShape.bezierCurveTo(-5, 3, 0, 7, 0, 10);
+            heartShape.bezierCurveTo(0, 7, 5, 3, 5, 0);
+            heartShape.bezierCurveTo(5, -3, 0, -3, 0, 0);
+
+            const geometry = new THREE.ShapeGeometry(heartShape);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0xff758c, 
+                transparent: true, 
+                opacity: 0.3 
+            });
+
+            const particles = [];
+            for(let i=0; i<40; i++) {
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(
+                    (Math.random()-0.5)*50,
+                    (Math.random()-0.5)*50,
+                    (Math.random()-0.5)*30
+                );
+                mesh.rotation.x = Math.PI;
+                mesh.rotation.z = Math.random() * Math.PI;
+                mesh.scale.set(0.15, 0.15, 0.15);
+                scene.add(mesh);
+                particles.push(mesh);
+            }
+
+            camera.position.z = 25;
+
+            // Connect floating objects to page scroll
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                const scrollY = window.scrollY;
+                
+                particles.forEach((p, index) => {
+                    p.rotation.y += 0.01;
+                    // Move objects slightly based on scroll
+                    p.position.y += Math.sin(Date.now() * 0.001 + index) * 0.01;
+                    p.position.z = (Math.random()-0.5)*30 + (scrollY * 0.01); 
+                });
+                
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Resize handle
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+    </script>
+</body>
+</html>
